@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CustomerAdress{% endblock %}
+
+{% block body %}
+    <h1>CustomerAdress</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ customer_adress.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ customer_adress.type }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ customer_adress.phone }}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{ customer_adress.adress }}</td>
+            </tr>
+            <tr>
+                <th>Postal_code</th>
+                <td>{{ customer_adress.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ customer_adress.city }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ customer_adress.country }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_customer_adress_index') }}">back to list</a>
+
+    <a href="{{ path('app_customer_adress_edit', {'id': customer_adress.id}) }}">edit</a>
+
+    {{ include('customer_adress/_delete_form.html.twig') }}
+{% endblock %}

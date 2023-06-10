@@ -1,0 +1,53 @@
+
+
+{{ form_start(form) }}
+    {{ form_label(form.customerAdresses) }}
+    {{ form_errors(form.customerAdresses) }}
+    <ul
+        class="customerAdresses"
+        data-index="{{ form.customerAdresses|length > 0 ? form.customerAdresses|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.customerAdresses.vars.prototype)|e('html_attr') }}"
+    >
+        {% for address in form.customerAdresses %}
+            <li>
+                {{ form_errors(address) }}
+                {{ form_widget(address) }}
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="add_item_link" data-collection-holder-class="customerAdresses">Add an adress</button>
+
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+
+<script defer>
+
+    const addFormToCollection = (e) => {
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+        const item = document.createElement('li');
+
+        item.innerHTML = collectionHolder
+            .dataset
+            .prototype
+            .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+            );
+
+        collectionHolder.appendChild(item);
+
+        collectionHolder.dataset.index++;
+    };
+
+    document
+    .querySelectorAll('.add_item_link')
+    .forEach(btn => {
+        btn.addEventListener("click", addFormToCollection)
+    });
+</script>
+
