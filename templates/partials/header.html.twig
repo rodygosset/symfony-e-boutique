@@ -15,9 +15,15 @@
                         <a class="nav-link" href="{{ path('app_catalog') }}">Catalog</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_cart') }}">Cart</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                     </li>
                 {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_cart') }}">Cart</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_login') }}">Login</a>
                     </li>
@@ -25,9 +31,6 @@
                         <a class="nav-link" href="{{ path('app_register') }}">Register</a>
                     </li>
                 {% endif %}
-                {# <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_cart') }}">Cart</a>
-                </li> #}
             </ul>
         </div>
     </div>

@@ -4,6 +4,8 @@
   <div class="container mt-5 d-flex flex-column" style="gap: 1rem;">
     <h1>Cart</h1>
 
+    <p class="text-success">Total: ${{ total  }} + $10 (transportation) = {{ total + 10 }} </p>
+
     {% if cartItems is empty %}
       <p>Your cart is empty.</p>
     {% else %}
@@ -26,9 +28,11 @@
                 <div class="form-group">
                   <label for="quantity{{ item.product.id }}">Quantity:</label>
                   <input type="number" class="form-control" id="quantity{{ item.product.id }}"
-                         name="quantity{{ item.product.id }}" value="{{ item.quantity }}" min="1">
+                         name="quantity{{ item.product.id }}" value="{{ item.quantity }}" min="1" onclick="updateQuantity(event, {{ item.product.id }})">
                 </div>
-                <a class="btn btn-primary" role="button" onclick="updateQuantity(event, {{ item.product.id }})" href="/cart/update/{{ item.product.id }}/quantity/">
+                <p class="card-text text-success" id="total{{ item.product.id }}">Total: ${{ item.product.price * item.quantity }} (for {{ item.quantity }} items)</p>
+
+                <a class="btn btn-primary" id="updateLink{{ item.product.id }}" href="/cart/update/{{ item.product.id }}/quantity/{{ item.quantity }}">
                   Update Quantity
                 </a>
                 <a class="btn btn-danger" href="/cart/remove/{{ item.product.id }}" role="button">
@@ -45,13 +49,16 @@
 
 {% block javascript %}
   <script>
+
     function updateQuantity(event, productId) {
-      event.preventDefault();
-      var quantity = document.getElementById('quantity' + productId).value;
-      if (quantity < 1) quantity = 1;
-      var updateLink = document.querySelector('a[href="/cart/update/' + productId + '/quantity/"]');
-      updateLink.href = updateLink.href + quantity;
-        updateLink.click();
+      var quantity = event.target.value;
+      if (quantity < 1) {
+        quantity = 1;
+        event.target.value = quantity;
+      }
+      var updateLink = document.getElementById('updateLink' + productId);
+      // remove the previous quantity & add the new one
+      updateLink.href = updateLink.href.replace(/quantity\/\d+/, 'quantity/' + quantity);
     }
   </script>
 {% endblock %}

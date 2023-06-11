@@ -16,19 +16,34 @@ class CartController extends AbstractController
 {
 
     private $entityManager;
-    private $session;
 
     public function __construct(EntityManagerInterface $entityManager, private RequestStack $requestStack)
     {
         $this->entityManager = $entityManager;
-        $this->session = $this->requestStack->getSession();
+    }
+
+    public function getTotal() {
+        $session = $this->requestStack->getSession();
+
+        $cart = $session->get('cart', []);
+
+        $total = 0;
+
+        foreach($cart as $cartItem) {
+            $total += $cartItem['product']->getPrice() * $cartItem['quantity'];
+        }
+
+        return $total;
     }
 
     #[Route('/cart', name: 'app_cart')]
     public function index(): Response
     {
+        $session = $this->requestStack->getSession();
+
         return $this->render('cart/index.html.twig', [
-            'cartItems' => $this->session->get('cart', [])
+            'cartItems' => $session->get('cart', []),
+            'total' => $this->getTotal()
         ]);
     }
 
@@ -53,14 +68,17 @@ class CartController extends AbstractController
         // cart is a list of assoc arrays
         // that each contain a product and a quantity
 
-        $cart = $this->session->get('cart', []);
+
+        $session = $this->requestStack->getSession();
+
+        $cart = $session->get('cart', []);
 
         // find the product in the cart
 
         $found = false;
         foreach($cart as &$cartItem) {
             if ($cartItem['product']->getId() === $product->getId()) {
-                $cartItem['quantity']++;
+                $cartItem['quantity'] += 1;
                 $found = true;
                 break;
             }
@@ -78,7 +96,7 @@ class CartController extends AbstractController
 
         // save the cart in the session
 
-        $this->session->set('cart', $cart);
+        $session->set('cart', $cart);
 
         return $this->redirectToRoute('app_cart');
     }
@@ -102,7 +120,10 @@ class CartController extends AbstractController
 
         // get the cart from the session
 
-        $cart = $this->session->get('cart', []);
+
+        $session = $this->requestStack->getSession();
+
+        $cart = $session->get('cart', []);
 
         // find the product in the cart and remove it
 
@@ -116,7 +137,7 @@ class CartController extends AbstractController
 
         // update the cart in the session
 
-        $this->session->set('cart', $cart);
+        $session->set('cart', $cart);
 
         return $this->redirectToRoute('app_cart');
     }
@@ -140,16 +161,18 @@ class CartController extends AbstractController
 
         // get the cart from the session
 
-        $cart = $this->session->get('cart', []);
+        $session = $this->requestStack->getSession();
+
+        $cart = $session->get('cart', []);
 
         // find the product in the cart and update the quantity
 
         $found = false;
 
-        foreach($cart as &$cartItem) {
-            if ($cartItem['product']->getId() === $product->getId()) {
+        for($i = 0; $i < count($cart); $i++) {
+            if ($cart[$i]['product']->getId() === $product->getId()) {
                 // update the quantity
-                $cartItem['quantity'] = $quantity;
+                $cart[$i]['quantity'] = $quantity;
                 $found = true;
                 break;
             } 
@@ -163,7 +186,7 @@ class CartController extends AbstractController
 
         // update the cart in the session
 
-        $this->session->set('cart', $cart);
+        $session->set('cart', $cart);
 
         return $this->redirectToRoute('app_cart');
     }
@@ -176,7 +199,9 @@ class CartController extends AbstractController
     {
         // clear the cart in the session
 
-        $this->session->set('cart', []);
+        $session = $this->requestStack->getSession();
+
+        $session->set('cart', []);
 
         return $this->redirectToRoute('app_cart');
     }
