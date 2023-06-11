@@ -13,6 +13,13 @@ Ce projet Symfony permet de gérer la commande en ligne d'un catalogue de produi
 - Gestion du catalogue dans le back-office de la boutique
 - Mise à jour du profil utilisateur
 
+
+## URL du site
+
+Vous pouvez accéder au site à l'adresse suivante:
+
+- [https://main-bvxea6i-q4o5dksw6dfp2.fr-4.platformsh.site](https://main-bvxea6i-q4o5dksw6dfp2.fr-4.platformsh.site)
+
 ## URLs des fonctionnalités
 
 - Gestion des utilisateurs (back-office) : `/user`
