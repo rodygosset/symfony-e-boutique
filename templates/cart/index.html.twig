@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="container mt-5 d-flex flex-column" style="gap: 1rem;">
+    <h1>Cart</h1>
+
+    {% if cartItems is empty %}
+      <p>Your cart is empty.</p>
+    {% else %}
+        <a class="btn btn-success" style="width: 100%; max-width: 300px;" href="/order/send" role="button">
+          Send Order
+        </a>
+        <!-- clear the cart -->
+        <a class="btn btn-danger" style="width: 100%; max-width: 300px;" href="/cart/clear" role="button">
+          Clear Cart
+        </a> 
+    <div class="row">
+        {% for item in cartItems %}
+          <div class="col-md-6 mb-4">
+            <div class="card h-100 d-flex flex-column" style="gap: 1rem;">
+              <img src="{{ item.product.imageURL }}" class="card-img-top" alt="{{ item.product.name }}">
+              <div class="card-body" style="justify-content: flex-end; display: flex; flex-direction: column">
+                <h5 class="card-title">{{ item.product.name }}</h5>
+                <p class="card-text">{{ item.product.description }}</p>
+                <p class="card-text">Price: ${{ item.product.price }}</p>
+                <div class="form-group">
+                  <label for="quantity{{ item.product.id }}">Quantity:</label>
+                  <input type="number" class="form-control" id="quantity{{ item.product.id }}"
+                         name="quantity{{ item.product.id }}" value="{{ item.quantity }}" min="1">
+                </div>
+                <a class="btn btn-primary" role="button" onclick="updateQuantity(event, {{ item.product.id }})" href="/cart/update/{{ item.product.id }}/quantity/">
+                  Update Quantity
+                </a>
+                <a class="btn btn-danger" href="/cart/remove/{{ item.product.id }}" role="button">
+                  Remove from Cart
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    function updateQuantity(event, productId) {
+      event.preventDefault();
+      var quantity = document.getElementById('quantity' + productId).value;
+      if (quantity < 1) quantity = 1;
+      var updateLink = document.querySelector('a[href="/cart/update/' + productId + '/quantity/"]');
+      updateLink.href = updateLink.href + quantity;
+        updateLink.click();
+    }
+  </script>
+{% endblock %}

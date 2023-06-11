@@ -22,9 +22,30 @@
                 align-items: center;
                 gap: 1rem;
             }
+
+            script {
+                display: none;
+            }
+
+            nav {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+            }
         </style>
     </head>
     <body>
+        {% include 'partials/header.html.twig' %}
+
         {% block body %}{% endblock %}
+        
+        <!-- allow twigs to add js through a javascript block -->
+        {% block javascript %}{% endblock %}
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

@@ -34,6 +34,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_ADMIN}
         - { path: ^/customer/adress, roles: ROLE_ADMIN }
+        - { path: ^/category, roles: ROLE_ADMIN }
+        - { path: ^/product, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

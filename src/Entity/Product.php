@@ -34,6 +34,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: CommandLine::class, orphanRemoval: true)]
     private Collection $commandLines;
 
+    #[ORM\Column(length: 255)]
+    private ?string $imageURL = null;
+
     public function __construct()
     {
         $this->commandLines = new ArrayCollection();
@@ -140,5 +143,17 @@ class Product
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getImageURL(): ?string
+    {
+        return $this->imageURL;
+    }
+
+    public function setImageURL(string $imageURL): self
+    {
+        $this->imageURL = $imageURL;
+
+        return $this;
     }
 }
