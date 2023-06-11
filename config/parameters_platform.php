@@ -12,7 +12,7 @@ foreach ($relationships['database'] as $endpoint) {
     }
 
     $container->setParameter('database_driver', 'pdo_' . $endpoint['scheme']);
-    $container->setParameter('database_url', $endpoint['url']);
+    $container->setParameter('DATABASE_URL', $endpoint['url']);
     $container->setParameter('database_host', $endpoint['host']);
     $container->setParameter('database_port', $endpoint['port']);
     $container->setParameter('database_name', $endpoint['path']);
