@@ -39,6 +39,23 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findNextOrderNumber(): int {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT MAX(number) as max_number
+            FROM `order`
+            ';
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->execute();
+
+        $data = $result->fetchAssociative();
+
+        return $data['max_number'] + 1;
+    }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

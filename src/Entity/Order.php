@@ -23,8 +23,12 @@ class Order
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datetime = null;
 
-    #[ORM\OneToMany(mappedBy: 'customerOrder', targetEntity: CommandLine::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'customerOrder', targetEntity: CommandLine::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $commandLines;
+
+    #[ORM\ManyToOne(inversedBy: 'orders', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -96,6 +100,18 @@ class Order
     public function __toString(): string
     {
         return $this->number . ' - ' . $this->datetime->format('d/m/Y H:i:s');
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
 }

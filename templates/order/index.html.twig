@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Order Information</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Order Number:</strong> {{ order.number }}</p>
+                <p><strong>Datetime:</strong> {{ order.datetime|date('Y-m-d H:i:s') }}</p>
+            </div>
+        </div>
+
+        <h2>Command Lines:</h2>
+        <ul class="list-group">
+            {% set overallTotal = 0 %}
+            {% for commandLine in order.commandLines %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Product:</strong> {{ commandLine.product.name }}</p>
+                            <p><strong>Quantity:</strong> {{ commandLine.quantity }}</p>
+                            <p><strong>Price:</strong> ${{ commandLine.product.price }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Total:</strong> ${{ commandLine.product.price * commandLine.quantity }}</p>
+                        </div>
+                    </div>
+                </li>
+                {% set overallTotal = overallTotal + (commandLine.product.price * commandLine.quantity) %}
+            {% endfor %}
+        </ul>
+
+        <h2 class="mt-4">Overall Total: ${{ overallTotal }}</h2>
+    </div>
+{% endblock %}

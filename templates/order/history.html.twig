@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="container mt-5">
+    <h1>Order History</h1>
+    
+    {% if orders is empty %}
+      <p>No orders found.</p>
+    {% else %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order Number</th>
+            <th>Date</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td>{{ order.number }}</td>
+              <td>{{ order.datetime|date('Y-m-d H:i:s') }}</td>
+                {% set overallTotal = 0 %}
+                {% for commandLine in order.commandLines %}
+                    {% set overallTotal = overallTotal + (commandLine.product.price * commandLine.quantity) %}
+                {% endfor %}
+              <td>${{ overallTotal }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+    function calculateTotal(commandLines) {
+      let total = 0;
+      commandLines.forEach(function(commandLine) {
+        const price = commandLine.product.price;
+        const quantity = commandLine.quantity;
+        total += price * quantity;
+      });
+      return total.toFixed(2);
+    }
+  </script>
+{% endblock %}

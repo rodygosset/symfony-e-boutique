@@ -4,13 +4,13 @@
   <div class="container mt-5 d-flex flex-column" style="gap: 1rem;">
     <h1>Cart</h1>
 
-    <p class="text-success">Total: ${{ total  }} + $10 (transportation) = {{ total + 10 }} </p>
 
     {% if cartItems is empty %}
       <p>Your cart is empty.</p>
     {% else %}
-        <a class="btn btn-success" style="width: 100%; max-width: 300px;" href="/order/send" role="button">
-          Send Order
+        <p class="text-success">Total: ${{ total  }} + $10 (transportation) = {{ total + 10 }} </p>
+        <a class="btn btn-success" style="width: 100%; max-width: 300px;" href="/order" role="button">
+          Order
         </a>
         <!-- clear the cart -->
         <a class="btn btn-danger" style="width: 100%; max-width: 300px;" href="/cart/clear" role="button">

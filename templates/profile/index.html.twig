@@ -3,11 +3,11 @@
 {% block title %}{{ user.firstName }} {{ user.name }}{% endblock %}
     
 {% block body %}
-    <div class=\"container\">
-        <div class=\"row\">
-            <div class=\"col-md-6\">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
                 <h3>Personal Information</h3>
-                <table class=\"table table-hover\">
+                <table class="table table-hover">
                     <tbody>
                         <tr>
                             <th>First Name</th>
@@ -28,10 +28,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class=\"col-md-6\">
+            <div class="col-md-6">
                 <h3>Customer Addresses</h3>
-                <!-- for each customerAdress, show the type, the phone, the adress, the postal_code, the city & the country -->
-                <table class=\"table table-hover\">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Type</th>
@@ -43,38 +42,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for customerAdress in customerAdresses %}
+                        {% for customerAddress in customerAdresses %}
                             <tr>
-                                <td>{{ customerAdress.type }}</td>
-                                <td>{{ customerAdress.phone }}</td>
-                                <td>{{ customerAdress.adress }}</td>
-                                <td>{{ customerAdress.postalCode }}</td>
-                                <td>{{ customerAdress.city }}</td>
-                                <td>{{ customerAdress.country }}</td>
+                                <td>{{ customerAddress.type }}</td>
+                                <td>{{ customerAddress.phone }}</td>
+                                <td>{{ customerAddress.adress }}</td>
+                                <td>{{ customerAddress.postalCode }}</td>
+                                <td>{{ customerAddress.city }}</td>
+                                <td>{{ customerAddress.country }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div class=\"col-md-6\">
+            <div class="col-md-6">
                 <h3>Account Information</h3>
-                <table class=\"table table-hover\">
+                <table class="table table-hover">
                     <tbody>
                         <tr>
                             <th>Email</th>
                             <td>{{ user.email }}</td>
                         </tr>
-                        <tr>
-                            <th>Roles</th>
-                            <!-- show the list of roles the user has -->
-                            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- link to /profile/edit -->
-            <div class=\"col-md-6\">
-                <a href="{{ path('app_profile_edit') }}" class=\"btn btn-primary\">Edit</a>
+            <div class="col-md-6">
+                <a href="{{ path('app_profile_edit') }}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     </div>

@@ -16,11 +16,11 @@ class CommandLine
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandLines')]
+    #[ORM\ManyToOne(inversedBy: 'commandLines', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandLines')]
+    #[ORM\ManyToOne(inversedBy: 'commandLines', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $customerOrder = null;
 

@@ -27,11 +27,11 @@ class Product
     #[ORM\Column]
     private ?bool $available = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\ManyToOne(inversedBy: 'products', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: CommandLine::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: CommandLine::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $commandLines;
 
     #[ORM\Column(length: 255)]
