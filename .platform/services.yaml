@@ -1,4 +1,4 @@
 
 database:
-    type: mariadb:10.5
+    type: mysql
     disk: 1024
