@@ -18,7 +18,13 @@ Ce projet Symfony permet de gérer la commande en ligne d'un catalogue de produi
 
 Vous pouvez accéder au site à l'adresse suivante:
 
-- [https://main-bvxea6i-q4o5dksw6dfp2.fr-4.platformsh.site](https://main-bvxea6i-q4o5dksw6dfp2.fr-4.platformsh.site)
+- [http://134.209.180.5](http://134.209.180.5)
+
+## URL GitHub
+
+Le code source est disponible sur GitHub à l'adresse suivante:
+
+- [https://github.com/rodygosset/symfony-e-boutique](https://github.com/rodygosset/symfony-e-boutique)
 
 ## URLs des fonctionnalités
 
